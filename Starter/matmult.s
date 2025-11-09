@@ -1,4 +1,4 @@
-.global matmult
+.global matMult
 .equ ws, 4
 
 .text
@@ -16,7 +16,7 @@
 # ebp - 4 * ws: k
 # ebp - 5 * ws: C <- esp
 
-matmult:
+matMult:
     .equ num_locals, 5
     .equ used_ebx, 1
     .equ used_edi, 1
