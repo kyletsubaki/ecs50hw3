@@ -90,15 +90,15 @@ matMult:
 
         // c[n] = malloc(num_cols_b * sizeof(int));
         // *(c + n) = malloc(num_cols_b * sizeof(int));
-        movl num_cols_b(%ebp), %edx # edx = num_cols_b;
-        shll $2, %edx
-        push %edx
+        movl num_cols_b(%ebp), %eax # eax = num_cols_b;
+        shll $2, %eax
+        push %eax
         movl %ecx, n(%ebp) # Save n
         call malloc
         addl $1 *ws, %esp # Clear malloc's arg from stack
-        movl c(%ebp), %eax # Restore c in eax
+        movl c(%ebp), %edx # Restore c in edx
         movl n(%ebp), %ecx # Restore n in ecx
-        movl %edx, (%eax, %ecx, ws) # *(c + n) = edx
+        movl %eax, (%edx, %ecx, ws) # *(c + n) = eax
 
         incl %ecx
         jmp init_for_start
