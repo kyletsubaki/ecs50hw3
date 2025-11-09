@@ -55,7 +55,7 @@ matmult:
     shll $2, %eax # eax = num_rows_a * sizeof(int*);
     push %eax # Set parameter to malloc
     call malloc
-    addl $1 # Clear malloc's arg from stack
+    addl $1 *ws, %esp # Clear malloc's arg from stack
     movl %eax, c(%ebp)
 
     // for (int n = 0; n < num_rows_a; ++n)
@@ -74,7 +74,7 @@ matmult:
         push %edx
         movl %ecx, n(%ebp) # Save n
         call malloc
-        addl $1 # Clear malloc's arg from stack
+        addl $1 *ws, %esp # Clear malloc's arg from stack
         movl c(%ebp), %eax # Restore c in eax
         movl n(%ebp), %ecx # Restore n in ecx
         movl %edx, (%eax, %ecx, ws) # *(c + n) = edx
