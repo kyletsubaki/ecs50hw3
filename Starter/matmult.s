@@ -120,6 +120,7 @@ matMult:
             jge outer_for_end
             // c[i][j] = 0;
             // *(*(c + i) + j) = 0
+            movl c(%ebp), %eax # eax = c
             movl (%eax, %ecx, ws), %eax  # eax = *(c + i)
             movl $0, (%eax, %esi, ws) # *(*(c + i) + j) = 0
 
