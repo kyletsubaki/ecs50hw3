@@ -31,11 +31,11 @@ int** matMult(int** a, int num_rows_a, int num_cols_a, int** b, int num_rows_b, 
 # ebp + 2 * ws: a
 # ebp + 1 * ws: return address
 # ebp ->: old ebp
-# ebp - 1 * ws: n
-# ebp - 2 * ws: i
-# ebp - 3 * ws: j
-# ebp - 4 * ws: k
-# ebp - 5 * ws: C <- esp
+# ebp - 1 * ws: c
+# ebp - 2 * ws: n
+# ebp - 3 * ws: i
+# ebp - 4 * ws: j
+# ebp - 5 * ws: k <- esp
 
 matMult:
     .equ num_locals, 5
@@ -55,11 +55,11 @@ matMult:
         .equ b, (5 * ws) # (%ebp)
         .equ num_rows_b, (6 * ws) # (%ebp)
         .equ num_cols_b, (7 * ws) # (%ebp)
-        .equ n, (-1 * ws) # (%ebp)
-        .equ i, (-2 * ws) # (%ebp)
-        .equ j, (-3 * ws) # (%ebp)
-        .equ k, (-4 * ws) # (%ebp)
-        .equ c, (-5 * ws) # (%ebp)
+        .equ c, (-1 * ws) # (%ebp)
+        .equ n, (-2 * ws) # (%ebp)
+        .equ i, (-3 * ws) # (%ebp)
+        .equ j, (-4 * ws) # (%ebp)
+        .equ k, (-5 * ws) # (%ebp)
         .equ old_esi, (-6 * ws) # (%ebp)
         .equ old_ebx, (-7 * ws) # (%ebp)
         .equ old_edi, (-8 * ws) # (%ebp)
@@ -71,13 +71,13 @@ matMult:
     prologue_end:
 
     // int **c = malloc(num_rows_a * sizeof(int*));
-    # eax = num_rows_a * sizeof(int*);
+    # ebx = num_rows_a * sizeof(int*);
     movl num_rows_a(%ebp), %eax # eax = num_rows_a;
     shll $2, %eax # eax = num_rows_a * sizeof(int*);
     push %eax # Set parameter to malloc
     call malloc
-    addl $1 *ws, %esp # Clear malloc's arg from stack
-    movl %eax, c(%ebp)
+    addl $1 * ws, %esp # Clear malloc's arg from stack
+    movl %eax, c(%ebp) # Save value of eax in c
 
     // for (int n = 0; n < num_rows_a; ++n)
     movl $0, %ecx # n = 0
@@ -90,15 +90,15 @@ matMult:
 
         // c[n] = malloc(num_cols_b * sizeof(int));
         // *(c + n) = malloc(num_cols_b * sizeof(int));
-        movl num_cols_b(%ebp), %eax # eax = num_cols_b;
-        shll $2, %eax
-        push %eax
+        movl num_cols_b(%ebp), %edx # edx = num_cols_b;
+        shll $2, %edx
+        push %edx
         movl %ecx, n(%ebp) # Save n
         call malloc
-        addl $1 *ws, %esp # Clear malloc's arg from stack
-        movl c(%ebp), %edx # Restore c in edx
+        addl $1 * ws, %esp # Clear malloc's arg from stack
         movl n(%ebp), %ecx # Restore n in ecx
-        movl %eax, (%edx, %ecx, ws) # *(c + n) = eax
+        movl c(%ebp), %edx # Restore c in edx
+        movl %eax, (%edx, %ecx, ws) # c[n] = eax
 
         incl %ecx
         jmp init_for_start
