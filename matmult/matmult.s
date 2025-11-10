@@ -141,22 +141,24 @@ matMult:
                 movl b(%ebp), %edi # edi = b
                 movl (%edi, %ebx, ws), %edi # edi = *(b + k)
                 movl (%edi, %esi, ws), %edi # edi = *(*(b + k) + j)
+                movl %ebx, k(%ebp) # Save k so we can use ebx
 
                 // edx = *(*(c + i) + j)
-                movl c(%ebp), %edx # Restore c in edx
-                movl (%edx, %ecx, ws), %edx # edx = *(c + i)
-                movl (%edx, %esi, ws), %edx # edx = *(*(c + i) + j)
+                movl c(%ebp), %ebx # Restore c in ebx
+                movl (%ebx, %ecx, ws), %ebx # ebx = *(c + i)
+                movl (%ebx, %esi, ws), %ebx # ebx = *(*(c + i) + j)
 
                 // edx:eax = edi * eax
                 imull %edi
 
-                // edx = edx + eax
-                addl %eax, %edx
+                // ebx = ebx + eax
+                addl %eax, %ebx
 
                 movl c(%ebp), %eax # Restore c in eax
                 movl (%eax, %ecx, ws), %eax # eax = *(c + i)
-                movl %edx, (%eax, %esi, ws) # *(*(c + i) + j) = edx
+                movl %ebx, (%eax, %esi, ws) # *(*(c + i) + j) = ebx
                 # *(*(c + i) + j) = *(*(c + i) + j) + edi * eax
+                movl k(%ebp), %ebx # Restore k in ebx
 
                 incl %ebx
                 jmp inner_for_start
@@ -179,6 +181,7 @@ matMult:
     movl %ebp, %esp # Remove the space for locals from stack
     pop %ebp # Restore old stack frame
     epilogue_end:
+    ret
 
 done:
     nop
