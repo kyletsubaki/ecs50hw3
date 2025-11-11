@@ -169,7 +169,9 @@ get_combs:
         jbe while_end
 
         // int first = *items;
-        movl (%eax), first(%ebp) # first = *eax
+        movl (%eax), %edx # Load value pointed by eax into edx
+        movl %edx, first(%ebp) # Store edx into first
+        movl len(%ebp), %edx # Restore len in edx
 
         // items++;
         incl %eax 
