@@ -154,7 +154,7 @@ get_combs:
         jmp for0_start
     for0_end:
     // return result
-    movl return(%ebp), %eax
+    movl result(%ebp), %eax
     jmp epilogue_start
 
     
@@ -206,7 +206,7 @@ get_combs:
             # y - num_last < 0
             # neg: y - num_last >= 0
             cmpl num_last(%ebp), %ecx
-            jge outer_outer_for_end
+            jge outer_for_end
 
             // result[index] = (int*)malloc(k * sizeof(int));
             movl k(%ebp), %eax # eax = k;
