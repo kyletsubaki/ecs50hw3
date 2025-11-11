@@ -248,12 +248,12 @@ get_combs:
                 movl %edx, (%eax, %esi, ws) # *(*(eax) + esi) = edx
                 decl %esi # Revert x + 1 to just x
 
-                incl %esi
+                incl %esi # x++
                 jmp inner_for_start
             inner_for_end: 
             incl %ebx # index++
 
-            addl %ecx
+            incl %ecx # y++
             jmp outer_for_start
         outer_for_end:
     while_end:
