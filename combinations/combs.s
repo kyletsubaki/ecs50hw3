@@ -40,7 +40,7 @@ int** get_combs(int* items, int k, int len) {
 */
 
 .global get_combs
-.edu ws, 4
+.equ ws, 4
 
 .text
 # ebp + 4 * ws: len
