@@ -296,7 +296,7 @@ get_combs:
     epilogue_start:
         movl old_edi(%ebp), %edi
         movl old_esi(%ebp), %esi
-        movl old_ebx(%ebp), %ebx
+        movl old_ebx(%ebp), %ebx       
 
         movl %ebp, %esp # Remove the space for locals from stack
         pop %ebp # Restore old stack frame
