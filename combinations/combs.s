@@ -83,7 +83,7 @@ get_combs:
         .equ num_last, (-7 * ws) # (%ebp)
         .equ y, (-8 * ws) # (%ebp)
         .equ x, (-9 * ws) # (%ebp)
-        .equ i_2 (-10 * ws) # (%ebp)
+        .equ i_2, (-10 * ws) # (%ebp)
         .equ old_ebx, (-11 * ws) # (%ebp)
         .equ old_esi, (-12 * ws) # (%ebp)
         .equ old_edi, (-13 * ws) # (%ebp)
