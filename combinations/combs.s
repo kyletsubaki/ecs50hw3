@@ -57,10 +57,11 @@ int** get_combs(int* items, int k, int len) {
 # ebp - 7 * ws: num_last
 # ebp - 8 * ws: y
 # ebp - 9 * ws: x
+# ebp - 10 * ws: i_2
 
 get_combs:
     prologue_start:
-        .equ num_locals, 9
+        .equ num_locals, 10
         .equ used_ebx, 1
         .equ used_esi, 1
         .equ used_edi, 1
@@ -82,9 +83,10 @@ get_combs:
         .equ num_last, (-7 * ws) # (%ebp)
         .equ y, (-8 * ws) # (%ebp)
         .equ x, (-9 * ws) # (%ebp)
-        .equ old_ebx, (-10 * ws) # (%ebp)
-        .equ old_esi, (-11 * ws) # (%ebp)
-        .equ old_edi, (-12 * ws) # (%ebp)
+        .equ i_2 (-10 * ws) # (%ebp)
+        .equ old_ebx, (-11 * ws) # (%ebp)
+        .equ old_esi, (-12 * ws) # (%ebp)
+        .equ old_edi, (-13 * ws) # (%ebp)
 
         # Saved Registers
         movl %ebx, old_ebx(%ebp)
