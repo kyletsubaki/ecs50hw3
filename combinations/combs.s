@@ -162,13 +162,13 @@ get_combs:
     
     movl len(%ebp), %edx # edx = len
     movl items(%ebp), %eax # eax = items
-    movl k(%ebp), %ecx
+    movl k(%ebp), %ecx  # ecx = k
     while_start:
         // while(len > k)
         # len - k > 0
         # neg: len - k <= 0
         cmpl %ecx, %edx # len - k
-        jbe while_end
+        jle while_end
 
         // int first = *items;
         movl (%eax), %edx # Load value pointed by eax into edx
