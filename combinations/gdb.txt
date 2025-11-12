@@ -1,0 +1,139 @@
+Breakpoint 1 at 0x80491f1: file combs.s, line 110.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, prologue_end () at combs.s:110
+110	    push %ecx # Put combs * sizeof(int*) on the stack as an arg
+@EBP=0xffffd398
+watching result slot at 0xffffd390
+Hardware watchpoint 2: *(int*)$resaddr
+
+Hardware watchpoint 2: *(int*)$resaddr
+
+Old value = -11100
+New value = 134541792
+prologue_end () at combs.s:116
+116	    movl $0, index(%ebp) # index = 0;
+--- WATCHPOINT TRIGGERED ---
+eax            0x804f1e0           134541792
+ecx            0x0                 0
+edx            0x0                 0
+ebx            0xf7f7f000          -134746112
+esp            0xffffd364          0xffffd364
+ebp            0xffffd398          0xffffd398
+esi            0xffffd4a4          -11100
+edi            0xf7ffcb80          -134231168
+eip            0x80491fd           0x80491fd <prologue_end+37>
+eflags         0x282               [ SF IF ]
+cs             0x23                35
+ss             0x2b                43
+ds             0x2b                43
+es             0x2b                43
+fs             0x0                 0
+gs             0x63                99
+0xffffd358:	0xffffd398	0x080491f7	0x00000028	0xf7ffcb80
+0xffffd368:	0xffffd4a4	0xf7f7f000	0xffffd4a4	0xf7ffcb80
+0xffffd378:	0xffffd3d8	0xf7db16b9	0xf7f7f620	0x0804a029
+0xffffd388:	0xffffd3a4	0x00000002	0x0804f1e0	0x0000000a
+0xffffd398:	0xffffd3d8	0x0804954e	0x0804f1c0	0x00000003
+0xffffd3a8:	0x00000005	0xf7f7f054	0xf7fbe4a0	0xf7fd6f20
+0xffffd3b8:	0x00000005	0x00000003	0x00000005	0x0804f1c0
+0xffffd3c8:	0xf7fbeb30	0xdb2bd600	0xffffd3f0	0xf7f7f000
+0xffffd3d8:	0xf7ffd020	0xf7d7a519	0xffffd68b	0x00000070
+0xffffd3e8:	0xf7ffd000	0xf7d7a519	0x00000001	0xffffd4a4
+=> 0x80491fd <prologue_end+37>:	movl   $0x0,-0xc(%ebp)
+   0x8049204 <if>:	cmpl   $0x1,0xc(%ebp)
+   0x8049208 <if+4>:	jne    0x8049251 <while_start>
+   0x804920a <if+6>:	mov    $0x0,%ecx
+   0x804920f <for0_start>:	cmp    0x10(%ebp),%ecx
+   0x8049212 <for0_start+3>:	jge    0x8049240 <for0_end>
+   0x8049214 <for0_start+5>:	mov    0xc(%ebp),%edx
+   0x8049217 <for0_start+8>:	shl    $0x2,%edx
+   0x804921a <for0_start+11>:	push   %edx
+   0x804921b <for0_start+12>:	mov    %ecx,-0x10(%ebp)
+   0x804921e <for0_start+15>:	call   0x8049080 <malloc@plt>
+   0x8049223 <for0_start+20>:	add    $0x4,%esp
+   0x8049226 <for0_start+23>:	mov    -0x8(%ebp),%edx
+   0x8049229 <for0_start+26>:	mov    -0x10(%ebp),%ecx
+   0x804922c <for0_start+29>:	mov    %eax,(%edx,%ecx,4)
+   0x804922f <for0_start+32>:	mov    0x8(%ebp),%eax
+   0x8049232 <for0_start+35>:	mov    (%eax,%ecx,4),%eax
+   0x8049235 <for0_start+38>:	mov    -0x8(%ebp),%edx
+   0x8049238 <for0_start+41>:	mov    (%edx,%ecx,4),%edx
+   0x804923b <for0_start+44>:	mov    %eax,(%edx)
+#0  prologue_end () at combs.s:116
+#1  0xf7ffcb80 in ?? () from /lib/ld-linux.so.2
+#2  0x0804954e in main () at main.c:71
+Warning: 'set logging off', an alias for the command 'set logging enabled', is deprecated.
+Use 'set logging enabled off'.
+
+Breakpoint 1 at 0x80491f1: file combs.s, line 110.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, prologue_end () at combs.s:110
+warning: Source file is more recent than executable.
+110	    push %ecx # Put combs * sizeof(int*) on the stack as an arg
+@EBP=0xffffd398
+watching result slot at 0xffffd390
+Hardware watchpoint 2: *(int*)$resaddr
+
+Hardware watchpoint 2: *(int*)$resaddr
+
+Old value = -11100
+New value = 134541792
+prologue_end () at combs.s:116
+116	    movl $0, index(%ebp) # index = 0;
+--- WATCHPOINT TRIGGERED ---
+eax            0x804f1e0           134541792
+ecx            0x0                 0
+edx            0x0                 0
+ebx            0xf7f7f000          -134746112
+esp            0xffffd364          0xffffd364
+ebp            0xffffd398          0xffffd398
+esi            0xffffd4a4          -11100
+edi            0xf7ffcb80          -134231168
+eip            0x80491fd           0x80491fd <prologue_end+37>
+eflags         0x282               [ SF IF ]
+cs             0x23                35
+ss             0x2b                43
+ds             0x2b                43
+es             0x2b                43
+fs             0x0                 0
+gs             0x63                99
+0xffffd358:	0xffffd398	0x080491f7	0x00000028	0xf7ffcb80
+0xffffd368:	0xffffd4a4	0xf7f7f000	0xffffd4a4	0xf7ffcb80
+0xffffd378:	0xffffd3d8	0xf7db16b9	0xf7f7f620	0x0804a029
+0xffffd388:	0xffffd3a4	0x00000002	0x0804f1e0	0x0000000a
+0xffffd398:	0xffffd3d8	0x0804954e	0x0804f1c0	0x00000003
+0xffffd3a8:	0x00000005	0xf7f7f054	0xf7fbe4a0	0xf7fd6f20
+0xffffd3b8:	0x00000005	0x00000003	0x00000005	0x0804f1c0
+0xffffd3c8:	0xf7fbeb30	0x3765df00	0xffffd3f0	0xf7f7f000
+0xffffd3d8:	0xf7ffd020	0xf7d7a519	0xffffd68b	0x00000070
+0xffffd3e8:	0xf7ffd000	0xf7d7a519	0x00000001	0xffffd4a4
+=> 0x80491fd <prologue_end+37>:	movl   $0x0,-0xc(%ebp)
+   0x8049204 <if>:	cmpl   $0x1,0xc(%ebp)
+   0x8049208 <if+4>:	jne    0x8049251 <while_start>
+   0x804920a <if+6>:	mov    $0x0,%ecx
+   0x804920f <for0_start>:	cmp    0x10(%ebp),%ecx
+   0x8049212 <for0_start+3>:	jge    0x8049240 <for0_end>
+   0x8049214 <for0_start+5>:	mov    0xc(%ebp),%edx
+   0x8049217 <for0_start+8>:	shl    $0x2,%edx
+   0x804921a <for0_start+11>:	push   %edx
+   0x804921b <for0_start+12>:	mov    %ecx,-0x10(%ebp)
+   0x804921e <for0_start+15>:	call   0x8049080 <malloc@plt>
+   0x8049223 <for0_start+20>:	add    $0x4,%esp
+   0x8049226 <for0_start+23>:	mov    -0x8(%ebp),%edx
+   0x8049229 <for0_start+26>:	mov    -0x10(%ebp),%ecx
+   0x804922c <for0_start+29>:	mov    %eax,(%edx,%ecx,4)
+   0x804922f <for0_start+32>:	mov    0x8(%ebp),%eax
+   0x8049232 <for0_start+35>:	mov    (%eax,%ecx,4),%eax
+   0x8049235 <for0_start+38>:	mov    -0x8(%ebp),%edx
+   0x8049238 <for0_start+41>:	mov    (%edx,%ecx,4),%edx
+   0x804923b <for0_start+44>:	mov    %eax,(%edx)
+#0  prologue_end () at combs.s:116
+#1  0xf7ffcb80 in ?? () from /lib/ld-linux.so.2
+#2  0x0804954e in main () at main.c:71
+Warning: 'set logging off', an alias for the command 'set logging enabled', is deprecated.
+Use 'set logging enabled off'.
+

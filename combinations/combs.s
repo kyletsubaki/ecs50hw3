@@ -69,8 +69,7 @@ get_combs:
 
         push %ebp 
         movl %esp, %ebp
-        subl $num_locals * ws, %esp
-        subl $num_saved_regs * ws, %esp
+        subl $(num_locals + num_saved_regs) * ws, %esp
         .equ len, (4 * ws) # (%ebp)
         .equ k, (3 * ws) # (%ebp)
         .equ items, (2 * ws) # (%ebp)
@@ -159,11 +158,11 @@ get_combs:
     movl result(%ebp), %eax
     jmp epilogue_start
 
-    
-    movl len(%ebp), %edx # edx = len
-    movl items(%ebp), %eax # eax = items
-    movl k(%ebp), %ecx  # ecx = k
     while_start:
+        // Reload loop variables from stack for each iteration
+        movl len(%ebp), %edx # edx = len
+        movl items(%ebp), %eax # eax = items
+        movl k(%ebp), %ecx  # ecx = k
         // while(len > k)
         # len - k > 0
         # neg: len - k <= 0
@@ -176,7 +175,7 @@ get_combs:
         movl len(%ebp), %edx # Restore len in edx
 
         // items++;
-        incl %eax 
+        addl $ws, %eax
 
         // len--;
         decl %edx
@@ -245,20 +244,22 @@ get_combs:
                 movl last(%ebp), %edx # Restore last in edx
                 movl (%edx, %ecx, ws), %edx # edx = *(last + y)
                 movl (%edx, %esi, ws), %edx # edx = *(*(last + y) + x)
-                incl %esi # esi = x + 1;
                 movl result(%ebp), %eax # eax = result;
                 movl (%eax, %ebx, ws), %eax # eax = *(result + index)
-                movl %edx, (%eax, %esi, ws) # *(*(eax) + esi) = edx
-                decl %esi # Revert x + 1 to just x
+                movl %esi, %edi # edi = x
+                incl %edi # edi = x + 1
+                movl %edx, (%eax, %edi, ws) # *(*(eax) + x + 1) = edx
 
                 incl %esi # x++
                 jmp inner_for_start
             inner_for_end: 
             incl %ebx # index++
+            movl %ebx, index(%ebp) # store updated index back to memory
 
             incl %ecx # y++
             jmp outer_for_start
         outer_for_end:
+            jmp while_start
     while_end:
 
     // result[index] = (int*)malloc(k * sizeof(int));
@@ -268,11 +269,14 @@ get_combs:
     call malloc
     addl $1 * ws, %esp # Remove arg from stack
     movl result(%ebp), %edx # Restore result in edx
+    movl index(%ebp), %ebx # load index into ebx
     movl %eax, (%edx, %ebx, ws) # result[index] = eax
 
     // for (int i = 0; i < k; i++) 
     movl $0, %ecx # i = 0;
     movl k(%ebp), %esi # esi = k
+    movl result(%ebp), %edx # reload result into edx
+    movl index(%ebp), %ebx # reload index into ebx
     for1_start:
         # i - k < 0
         # neg: i - k >= 0
@@ -280,10 +284,10 @@ get_combs:
         jge for1_end
 
         // result[index][i] = items[i];
-        movl (%edx, %ebx, ws), %edx # edx = *(result + index);
+        movl (%edx, %ebx, ws), %eax # eax = *(result + index);
         movl items(%ebp), %edi # edi = items;
         movl (%edi, %ecx, ws), %edi # edi = *(items + i);
-        movl %edi, (%edx, %ecx, ws) # *(*(result + index) + i) = edi;
+        movl %edi, (%eax, %ecx, ws) # *(*(result + index) + i) = edi;
 
         incl %ecx # i++
         jmp for1_start
