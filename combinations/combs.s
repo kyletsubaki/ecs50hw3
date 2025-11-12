@@ -68,7 +68,7 @@ get_combs:
 
         push %ebp 
         movl %esp, %ebp
-        subl $(num_locals + num_saved_regs) * ws, %esp
+        subl $num_locals * ws, %esp
         subl $num_saved_regs * ws, %esp
         .equ len, (4 * ws) # (%ebp)
         .equ k, (3 * ws) # (%ebp)
@@ -197,6 +197,7 @@ get_combs:
         movl len(%ebp), %edx # edx = len;
         push %edx # Put len on the stack as an arg
         call num_combs
+        addl $2 * ws, %esp # Clear args on stack
         movl %eax, num_last(%ebp) # num_last = eax
 
         // for (int y = 0; y < num_last; y++)
